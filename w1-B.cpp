@@ -1,4 +1,10 @@
 #include <iostream>
+<<<<<<< HEAD
+=======
+#include <stdio.h>
+#include <stack>
+#include <string>
+>>>>>>> 82d621ae8ad69c7d35ab10440746267a45b2caad
 using namespace std;
 
 struct matrix{
@@ -8,37 +14,55 @@ struct matrix{
 };
 int main()
 {
+    int count = 0;
+    scanf("%d",&count);
+    matrix *m = (matrix*)malloc(sizeof(matrix)*count);
+    for(int i = 0;i < count;i++) scanf(" %c%d%d",&(m+i)->c,&(m+i)->row,&(m+i)->col);
+    // for(int i = 0;i < count;i++) cout<<(m+i)->c<<(m+i)->row<<(m+i)->col<<'\n';
+    stack<matrix> s;
     string expression;
+    cin.ignore();
+    // while(getline(cin,expression)) cout<<expression<<"\n";
     while(getline(cin,expression)){
-        bool error = false;
+        while(!s.empty()) s.pop(); 
         int index = 0;
-        int round = 0;
-
+        int ans = 0;
+        int flag = 0;
         while(index < expression.length()){
-            char unit = expression[index];
-            switch(unit){
-                case '(':
-                    round++;
+            int command = expression[index];
+            ++index;
+            if(command == '('){
+                continue;
+            }
+            else if(command == ')'){ 
+                matrix x = s.top();
+                s.pop();
+                matrix y = s.top();
+                s.pop();
+                if(x.row != y.col){
+                    flag = 1;
+                    cout<<"error\n";
                     break;
-                case '(':
-                    round--;
-                    break;
-                default:
-                    break;
-
+                }
+                ans += x.row * x.col * y.row;
+                matrix z;
+                z.row = y.row;
+                z.col = x.col;
+                s.push(z);
+            }
+            else{
+                matrix temp;
+                for(int i = 0;i<count;i++){
+                    if((m+i)->c == command){
+                        temp = *(m+i);
+                        break;
+                    }
+                }
+                s.push(temp);
             }
         }
-        if(error) cout << "error\n";
-}
-    // int count = 0;    
-    // cin >> count;
-    // matrix * m = (matrix *)malloc(sizeof(matrix)*count);
-    // for(int i = 0; i < count; i++) cin >> (m+i)->c >> (m+i)->row >> (m+i)->col;
-
-    // free(m);
-}
-
-int calculateResult(const string &input, size_t &index)
-{
-    int result = 0;
+        if(index==expression.length() && !flag) cout<<ans<<'\n';
+    }
+    while(!s.empty()) s.pop();
+    free(m);
 }
