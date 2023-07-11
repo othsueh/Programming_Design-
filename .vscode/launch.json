@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/othsueh/2023_summer_training",
-      "program": "/home/othsueh/2023_summer_training/build/Debug/outDebug",
+      "cwd": "/home/othsueh/Programming_Design",
+      "program": "/home/othsueh/Programming_Design/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
