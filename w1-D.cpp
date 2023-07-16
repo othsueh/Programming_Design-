@@ -1,64 +1,15 @@
-#include <iostream>
 #include <stdio.h>
-#include <stack>
-#include <string>
-#include <stdlib.h>
+#include <iostream>
+
 using namespace std;
 
-struct matrix{
-    char c;
-    int row;
-    int col;
-};
+
 int main()
 {
-    int count = 0;
-    scanf("%d",&count);
-    matrix *m = (matrix*)malloc(sizeof(matrix)*count);
-    for(int i = 0;i < count;i++) scanf(" %c%d%d",&(m+i)->c,&(m+i)->row,&(m+i)->col);
-    stack<matrix> s;
-    string expression;
-    cin.ignore();
-    while(getline(cin,expression)){
-        while(!s.empty()) s.pop(); 
-        int index = 0;
-        int ans = 0;
-        int flag = 0;
-        while(index < expression.length()){
-            int command = expression[index];
-            ++index;
-            if(command == '('){
-                continue;
-            }
-            else if(command == ')'){ 
-                matrix x = s.top();
-                s.pop();
-                matrix y = s.top();
-                s.pop();
-                if(x.row != y.col){
-                    flag = 1;
-                    cout<<"error\n";
-                    break;
-                }
-                ans += x.row * x.col * y.row;
-                matrix z;
-                z.row = y.row;
-                z.col = x.col;
-                s.push(z);
-            }
-            else{
-                matrix temp;
-                for(int i = 0;i<count;i++){
-                    if((m+i)->c == command){
-                        temp = *(m+i);
-                        break;
-                    }
-                }
-                s.push(temp);
-            }
-        }
-        if(index==expression.length() && !flag) cout<<ans<<'\n';
+    int shop = 0;
+    scanf("%d", &shop);
+    for(int i = 0;i < shop; i--){
+        string companyName;
+        getline(cin, companyName);
     }
-    while(!s.empty()) s.pop();
-    free(m);
 }
