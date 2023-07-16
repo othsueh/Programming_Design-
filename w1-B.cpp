@@ -1,68 +1,30 @@
 #include <iostream>
-<<<<<<< HEAD
-=======
+#include <vector>
 #include <stdio.h>
-#include <stack>
-#include <string>
->>>>>>> 82d621ae8ad69c7d35ab10440746267a45b2caad
+#include <queue>
+#include <functional>
 using namespace std;
 
-struct matrix{
-    char c;
-    int row;
-    int col;
-};
 int main()
 {
-    int count = 0;
-    scanf("%d",&count);
-    matrix *m = (matrix*)malloc(sizeof(matrix)*count);
-    for(int i = 0;i < count;i++) scanf(" %c%d%d",&(m+i)->c,&(m+i)->row,&(m+i)->col);
-    // for(int i = 0;i < count;i++) cout<<(m+i)->c<<(m+i)->row<<(m+i)->col<<'\n';
-    stack<matrix> s;
-    string expression;
-    cin.ignore();
-    // while(getline(cin,expression)) cout<<expression<<"\n";
-    while(getline(cin,expression)){
-        while(!s.empty()) s.pop(); 
-        int index = 0;
-        int ans = 0;
-        int flag = 0;
-        while(index < expression.length()){
-            int command = expression[index];
-            ++index;
-            if(command == '('){
-                continue;
-            }
-            else if(command == ')'){ 
-                matrix x = s.top();
-                s.pop();
-                matrix y = s.top();
-                s.pop();
-                if(x.row != y.col){
-                    flag = 1;
-                    cout<<"error\n";
-                    break;
-                }
-                ans += x.row * x.col * y.row;
-                matrix z;
-                z.row = y.row;
-                z.col = x.col;
-                s.push(z);
+    int n, k;
+    priority_queue<int, vector<int>, greater<int>> pq;
+    while(scanf("%d%d",&n,&k)==2){
+        while(n){
+            --n;
+            char command;
+            scanf(" %c",&command);
+            if(command == 'I'){
+                int data;
+                scanf("%d",&data);
+                pq.push(data);
+                if(pq.size() > k) pq.pop();
             }
             else{
-                matrix temp;
-                for(int i = 0;i<count;i++){
-                    if((m+i)->c == command){
-                        temp = *(m+i);
-                        break;
-                    }
-                }
-                s.push(temp);
+                cout<<pq.top()<<'\n'; 
             }
         }
-        if(index==expression.length() && !flag) cout<<ans<<'\n';
+        while(!pq.empty()) pq.pop();
     }
-    while(!s.empty()) s.pop();
-    free(m);
+
 }
