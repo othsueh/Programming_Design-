@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <cstring>
-#include <vector>
 using namespace std;
 int graph[27][27];
 int y, x, flag;
@@ -29,6 +28,7 @@ void dfs(int row, int col, int step)
             dfs(nex, ney, step+1);
         }
     }
+    //! If not available, then set the point to 0
     graph[row][col] = 0;
 
 }
